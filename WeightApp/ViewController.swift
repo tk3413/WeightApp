@@ -10,17 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    //Initializing arrays to hold all of the fields and the 
+    //Initializing arrays to hold all of the fields and the
     //list of available plates
     var listOfTextFields = [UITextField]()
     var listOfWeights = [Double]()
@@ -34,6 +24,34 @@ class ViewController: UIViewController {
     @IBOutlet weak var num5ToPut_Field: UITextField!
     @IBOutlet weak var num2ToPut_Field: UITextField!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    //Dismiss keyboard method
+    func keyboardDismiss() {
+        totalWeight_Field.resignFirstResponder()
+    }
+    
+    //ADD Gesture Recignizer to Dismiss keyboard then view tapped
+    @IBAction func viewTapped(_ sender: AnyObject) {
+        keyboardDismiss()
+    }
+    
+    //Dismiss keyboard using Return Key (Done) Button
+    //Do not forgot to add protocol UITextFieldDelegate
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        keyboardDismiss()
+        
+        return true
+    }
+
     //This is a void function that simply populates the 
     //arrays initialized above. Default values are entered
     //in currently for the available plates.
@@ -66,6 +84,7 @@ class ViewController: UIViewController {
     //input from the user
     func setTotalWeight(){
         totalWeight = Int(totalWeight_Field.text!)!
+        self.view.endEditing(true)
         
     }
 
@@ -73,6 +92,7 @@ class ViewController: UIViewController {
     //input from the user
     func setBarWeight(){
         barWeight = Int(barWeight_Field.text!)!
+        self.view.endEditing(true)
         
     }
     
@@ -90,9 +110,9 @@ class ViewController: UIViewController {
     //Void function, on button press, this method will replace
     //all of the fields on the screen with 0's
     @IBAction func clear(_ sender: UIButton) {
-        barWeight_Field.text = String(0)
-        totalWeight_Field.text = String(0)
-        weightLeft_Field.text = String(0)
+        barWeight_Field.text = String()
+        totalWeight_Field.text = String()
+        weightLeft_Field.text = String()
         while(clearCounter<listOfTextFields.count){
             listOfTextFields[clearCounter].text = String(0)
             clearCounter += 1
@@ -114,6 +134,7 @@ class ViewController: UIViewController {
     //the count to the screen, and then move on to the next smaller
     //plate. 
     @IBAction func calculate_Button(_ sender: UIButton) {
+        self.view.endEditing(true)
         setTotalWeight()
         setBarWeight()
         populateArrays()
