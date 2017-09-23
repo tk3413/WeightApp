@@ -73,8 +73,8 @@ class ViewController: UIViewController {
     
     //These variables will all be used later, for now
     //all are initialized as 0
-    var totalWeight = 0
-    var barWeight = 0
+    var totalWeight: Double = 0
+    var barWeight: Double = 0
     var weightLeft: Double = 0
     var counter: Int = 0
     var clearCounter: Int = 0
@@ -83,7 +83,7 @@ class ViewController: UIViewController {
     //Void function that sets the total weight based on 
     //input from the user
     func setTotalWeight(){
-        totalWeight = Int(totalWeight_Field.text!)!
+        totalWeight = Double(totalWeight_Field.text!)!
         self.view.endEditing(true)
         
     }
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
     //Void function that sets the bar weight based on 
     //input from the user
     func setBarWeight(){
-        barWeight = Int(barWeight_Field.text!)!
+        barWeight = Double(barWeight_Field.text!)!
         self.view.endEditing(true)
         
     }
@@ -138,15 +138,14 @@ class ViewController: UIViewController {
         setTotalWeight()
         setBarWeight()
         populateArrays()
-        weightLeft = Double((totalWeight-barWeight)/2)
+        weightLeft = (totalWeight-barWeight)/2
         self.weightLeft_Field.text = String(weightLeft)
         debugMessages()
         index = 0
         counter = 0
         
-        while(weightLeft>0&&weightLeft>listOfWeights[listOfWeights.count-1]){
+        while(weightLeft>0&&weightLeft>=listOfWeights[listOfWeights.count-1]){
         print("Weight left: ", weightLeft, " Index: ", index)
-            
             if(weightLeft>=listOfWeights[index]){
                 counter += 1
                 weightLeft = Double(weightLeft)-listOfWeights[index]
@@ -156,9 +155,10 @@ class ViewController: UIViewController {
                 self.listOfTextFields[index].text = String(counter)
                 counter = 0
                 index += 1
-                print("Weight left: ", weightLeft, " Index: ", index)
+                
             }//if2
 
+            
         }//while
     }//calculate_Button
     
